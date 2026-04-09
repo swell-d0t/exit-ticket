@@ -1,26 +1,13 @@
 # netlify.toml
-# ─────────────────────────────────────────────────────────
-# Tells Netlify how to serve this app.
-# No build step needed — it's plain HTML/CSS/JS.
-# The edge function injects Supabase credentials at request
-# time so they never need to be in the GitHub repo.
-# ─────────────────────────────────────────────────────────
-
 [build]
   publish = "."
-
-# Register the config edge function
-[[edge_functions]]
-  path = "/config.js"
-  function = "config"
-
-# Redirect all routes to index.html
+  command = "echo \"const SUPABASE_URL = '$SUPABASE_URL'; const SUPABASE_ANON_KEY = '$SUPABASE_ANON_KEY'; function getConfig() { return { url: SUPABASE_URL, key: SUPABASE_ANON_KEY }; } function saveConfig() {}\" > config.js"
+ 
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
-
-# Security headers
+ 
 [[headers]]
   for = "/*"
   [headers.values]
