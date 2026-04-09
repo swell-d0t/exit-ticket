@@ -21,9 +21,9 @@ Each teacher gets their own account with their own questions, class code, and st
 - Add, view, and delete questions from a dashboard
 - Responses table with submission time and tab-switch warnings highlighted in amber
 - Word count on every short answer response, colour-coded:
-  - 🔴 Red — under 10 words
-  - 🟡 Amber — 10–19 words
-  - 🟢 Green — 20+ words
+  - Red — under 10 words
+  - Amber — 10–19 words
+  - Green — 20+ words
 - Export all responses to CSV (includes word counts)
 - Clear all responses after exporting
 - Regenerate class code between class periods
