@@ -1,16 +1,14 @@
-# ── Supabase credentials ──────────────────────────────────
-# config.js contains your real Supabase URL and anon key.
-# It must NEVER be committed to a public GitHub repository.
-# Use config.example.js as the template instead.
+# Supabase credentials — never commit this
 config.js
-
-# ── OS files ──────────────────────────────────────────────
+ 
+# OS files
 .DS_Store
 Thumbs.db
-
-# ── Editor files ──────────────────────────────────────────
+ 
+# Editor
 .vscode/
 *.code-workspace
-
-# ── Logs ──────────────────────────────────────────────────
+ 
+# Logs
 *.log
+ 
