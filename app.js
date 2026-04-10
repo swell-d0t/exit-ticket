@@ -110,8 +110,7 @@ async function teacherSignOut() {
 // ─────────────────────────────────────────────────────────
 function openDashboard() {
   const name = currentTeacher.name || 'Teacher';
-  document.getElementById('dashTeacherName').textContent = name + ''s Dashboard';
-  document.getElementById('displayClassCode').textContent = currentTeacher.class_code;
+  document.getElementById('dashTeacherName').textContent = name + "'s Dashboard";  document.getElementById('displayClassCode').textContent = currentTeacher.class_code;
   renderResponsesTable();
   renderQEditor();
   renderNewQForm();
