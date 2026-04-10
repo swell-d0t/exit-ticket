@@ -3,61 +3,68 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Exit Ticket</title>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <title>Unprompted</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-<!-- TAB WARNING OVERLAY -->
+<div id="toast-container"></div>
+
+<!-- TAB WARNING -->
 <div id="tabWarning">
   <div class="warn-modal">
     <div class="warn-emoji">⚠️</div>
     <div class="warn-badge" id="warnBadge">Warning 1</div>
     <h2>You left the page</h2>
-    <p>Switching tabs during your exit ticket is been recorded. Your teacher will be able to see this.</p>
+    <p>Switching tabs during your exit ticket has been recorded. Your teacher will be able to see this.</p>
     <button class="btn btn-outline btn-full" onclick="dismissTabWarning()">Return to ticket</button>
   </div>
 </div>
 
 <canvas id="confetti-canvas"></canvas>
 
-<!-- ════ LOADING SCREEN ════ -->
+<!-- LOADING -->
 <div class="screen center-layout active" id="screen-loading">
-  <div style="text-align:center;">
+  <div style="text-align:center">
     <div class="spinner"></div>
-    <p style="color:var(--text-3); font-size:13px; margin-top:16px;">Connecting…</p>
+    <p style="color:var(--text-3); font-size:13px; margin-top:16px; font-family:var(--font-mono)">Connecting…</p>
   </div>
 </div>
 
-<!-- ════ CONFIG SCREEN (shown if no Supabase config) ════ -->
+<!-- CONFIG -->
 <div class="screen center-layout" id="screen-config">
   <div class="card card-sm">
-    <div class="wordmark"><div class="wordmark-dot"></div><span class="wordmark-text">Exit Ticket · Setup</span></div>
+    <div class="wordmark">
+      <div class="wordmark-mark"><svg viewBox="0 0 14 14" fill="none"><path d="M7 1L9.5 5.5H12L8.5 8.5L10 13L7 10L4 13L5.5 8.5L2 5.5H4.5L7 1Z" fill="white"/></svg></div>
+      <span class="wordmark-text">Unprompted</span>
+    </div>
     <h2 style="margin-bottom:4px;">Connect to Supabase</h2>
-    <p class="text-muted" style="margin-bottom:24px;">Paste your Supabase project URL and anon key. See <code>README.md</code> for where to find these.</p>
+    <p class="text-muted" style="margin-bottom:24px;">Paste your project URL and anon key. See <code>README.md</code> for instructions.</p>
     <div class="form-stack" style="margin-bottom:16px;">
       <div class="field">
-        <label class="label">Supabase Project URL</label>
+        <label class="label">Project URL</label>
         <input type="text" id="cfg-url" placeholder="https://xxxxxxxxxxxx.supabase.co" />
       </div>
       <div class="field">
-        <label class="label">Supabase Anon Key</label>
-        <textarea id="cfg-key" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." style="min-height:80px; font-family:var(--font-mono); font-size:12px;"></textarea>
+        <label class="label">Anon Key</label>
+        <textarea id="cfg-key" placeholder="eyJhbGciOiJIUzI1NiIs..." style="min-height:80px; font-family:var(--font-mono); font-size:12px;"></textarea>
       </div>
     </div>
     <div id="cfgError" class="alert alert-danger" style="display:none;"></div>
     <button class="btn btn-primary btn-full" onclick="saveConfig()">Save & Connect</button>
-    <p style="font-size:12px; color:var(--text-3); text-align:center; margin-top:12px;">These are saved in your browser only.</p>
   </div>
 </div>
 
-<!-- ════ LANDING ════ -->
+<!-- LANDING -->
 <div class="screen center-layout" id="screen-landing">
   <div class="card card-sm">
-    <div class="wordmark"><div class="wordmark-dot"></div><span class="wordmark-text">Unprompted</span></div>
-    <h1>Show your<br/>understanding.</h1>
-    <p class="text-muted" style="margin-top:6px; margin-bottom:28px;">A quick check-in on your recent assignment. Please answer thoughtfully.</p>
+    <div class="wordmark">
+      <div class="wordmark-mark"><svg viewBox="0 0 14 14" fill="none"><path d="M7 1L9.5 5.5H12L8.5 8.5L10 13L7 10L4 13L5.5 8.5L2 5.5H4.5L7 1Z" fill="white"/></svg></div>
+      <span class="wordmark-text">Unprompted</span>
+    </div>
+    <h1>Show what<br/>you know.</h1>
+    <p class="text-muted" style="margin-top:8px; margin-bottom:32px;">A quick check-in on your recent assignment — no AI, just you.</p>
     <div class="form-stack">
       <button class="btn btn-primary btn-full" onclick="showScreen('screen-student-join')">I'm a student</button>
       <button class="btn btn-outline btn-full" onclick="showScreen('screen-teacher-login')">I'm a teacher</button>
@@ -65,12 +72,15 @@
   </div>
 </div>
 
-<!-- ════ TEACHER LOGIN ════ -->
+<!-- TEACHER LOGIN -->
 <div class="screen center-layout" id="screen-teacher-login">
   <div class="card card-sm">
-    <div class="wordmark"><div class="wordmark-dot"></div><span class="wordmark-text">Exit Ticket · Teacher</span></div>
+    <div class="wordmark">
+      <div class="wordmark-mark"><svg viewBox="0 0 14 14" fill="none"><path d="M7 1L9.5 5.5H12L8.5 8.5L10 13L7 10L4 13L5.5 8.5L2 5.5H4.5L7 1Z" fill="white"/></svg></div>
+      <span class="wordmark-text">Unprompted · Teacher</span>
+    </div>
     <h2 style="margin-bottom:4px;">Sign in</h2>
-    <p class="text-muted" style="margin-bottom:24px;">Use your teacher account to access the dashboard.</p>
+    <p class="text-muted" style="margin-bottom:24px;">Access your dashboard and student responses.</p>
     <div class="form-stack" style="margin-bottom:16px;">
       <div class="field">
         <label class="label">Email</label>
@@ -92,12 +102,15 @@
   </div>
 </div>
 
-<!-- ════ TEACHER REGISTER ════ -->
+<!-- TEACHER REGISTER -->
 <div class="screen center-layout" id="screen-teacher-register">
   <div class="card card-sm">
-    <div class="wordmark"><div class="wordmark-dot"></div><span class="wordmark-text">Exit Ticket · Teacher</span></div>
+    <div class="wordmark">
+      <div class="wordmark-mark"><svg viewBox="0 0 14 14" fill="none"><path d="M7 1L9.5 5.5H12L8.5 8.5L10 13L7 10L4 13L5.5 8.5L2 5.5H4.5L7 1Z" fill="white"/></svg></div>
+      <span class="wordmark-text">Unprompted · Teacher</span>
+    </div>
     <h2 style="margin-bottom:4px;">Create account</h2>
-    <p class="text-muted" style="margin-bottom:24px;">Set up your teacher account. Teachers have control over their questions, class code, and response data.</p>
+    <p class="text-muted" style="margin-bottom:24px;">Each teacher gets their own questions, class code, and responses.</p>
     <div class="form-stack" style="margin-bottom:16px;">
       <div class="field">
         <label class="label">Your name</label>
@@ -112,7 +125,7 @@
         <input type="password" id="regPassword" placeholder="Min. 6 characters" />
       </div>
     </div>
-    <div id="regError" class="alert alert-danger" style="display:none;"></div>
+    <div id="regError"   class="alert alert-danger"  style="display:none;"></div>
     <div id="regSuccess" class="alert alert-success" style="display:none;"></div>
     <div class="btn-row">
       <button class="btn btn-outline" onclick="showScreen('screen-teacher-login')">Back</button>
@@ -121,10 +134,13 @@
   </div>
 </div>
 
-<!-- ════ STUDENT JOIN ════ -->
+<!-- STUDENT JOIN -->
 <div class="screen center-layout" id="screen-student-join">
   <div class="card card-sm">
-    <div class="wordmark"><div class="wordmark-dot"></div><span class="wordmark-text">Exit Ticket</span></div>
+    <div class="wordmark">
+      <div class="wordmark-mark"><svg viewBox="0 0 14 14" fill="none"><path d="M7 1L9.5 5.5H12L8.5 8.5L10 13L7 10L4 13L5.5 8.5L2 5.5H4.5L7 1Z" fill="white"/></svg></div>
+      <span class="wordmark-text" id="studentWordmark">Unprompted</span>
+    </div>
     <h2 style="margin-bottom:4px;">Join</h2>
     <p class="text-muted" style="margin-bottom:24px;">Enter your name and the class code from your teacher.</p>
     <div class="form-stack" style="margin-bottom:16px;">
@@ -135,7 +151,7 @@
       <div class="field">
         <label class="label">Class code</label>
         <input type="text" id="classCode" placeholder="ABC123"
-          style="font-family:var(--font-mono); letter-spacing:0.1em; text-transform:uppercase;"
+          style="font-family:var(--font-mono); letter-spacing:0.12em; text-transform:uppercase;"
           oninput="this.value=this.value.toUpperCase()" autocomplete="off" />
       </div>
     </div>
@@ -147,7 +163,7 @@
   </div>
 </div>
 
-<!-- ════ QUESTION ════ -->
+<!-- QUESTION -->
 <div class="screen center-layout" id="screen-question">
   <div class="card card-md">
     <div class="progress-section">
@@ -155,7 +171,7 @@
         <span id="q-label">Question 1 of 5</span>
         <span id="q-pct">0%</span>
       </div>
-      <div class="progress-track"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
     </div>
     <div class="q-type-tag" id="q-type-tag">Short answer</div>
     <div class="q-text" id="q-text"></div>
@@ -165,23 +181,26 @@
   </div>
 </div>
 
-<!-- ════ COMPLETE ════ -->
+<!-- COMPLETE -->
 <div class="screen center-layout" id="screen-complete">
   <div class="complete-card">
     <div class="complete-emoji">🎉</div>
     <h1>You're all done!</h1>
-    <p>Your responses have been submitted.</p>
+    <p>Your responses have been submitted. Nice work — no shortcuts needed.</p>
     <button class="btn btn-outline" onclick="showScreen('screen-landing')">← Back to home</button>
   </div>
 </div>
 
-<!-- ════ DASHBOARD ════ -->
+<!-- DASHBOARD -->
 <div class="screen" id="screen-dashboard">
   <div class="dash-topbar">
     <div style="display:flex; align-items:center; gap:16px;">
-      <div class="dash-logo"><div class="dash-logo-dot"></div>Exit Ticket</div>
+      <div class="dash-wordmark">
+        <div class="dash-wordmark-mark"><svg viewBox="0 0 14 14" fill="none"><path d="M7 1L9.5 5.5H12L8.5 8.5L10 13L7 10L4 13L5.5 8.5L2 5.5H4.5L7 1Z" fill="white"/></svg></div>
+        <span class="dash-wordmark-text">Unprompted</span>
+      </div>
       <div class="top-divider"></div>
-      <span class="dash-subtitle" id="dashTeacherName">Teacher Dashboard</span>
+      <span class="dash-subtitle" id="dashTeacherName">Dashboard</span>
     </div>
     <div class="dash-actions">
       <button class="btn btn-sm btn-outline" onclick="exportCSV()">↓ Export CSV</button>
@@ -193,6 +212,7 @@
     <div class="tab-nav">
       <button class="tab-item active" onclick="switchTab('responses')">Responses</button>
       <button class="tab-item" onclick="switchTab('questions')">Questions</button>
+      <button class="tab-item" onclick="switchTab('bank')">Question Bank</button>
       <button class="tab-item" onclick="switchTab('settings')">Settings</button>
     </div>
 
@@ -203,7 +223,10 @@
           <div class="code-label">Class code — share with students</div>
           <div class="code-val" id="displayClassCode">——</div>
         </div>
-        <button class="btn btn-sm btn-outline" onclick="regenerateCode()">↺ New code</button>
+        <div style="display:flex; gap:8px;">
+          <button class="code-copy" onclick="copyCode()">Copy</button>
+          <button class="btn btn-sm btn-outline" onclick="regenerateCode()">↺ New code</button>
+        </div>
       </div>
       <div id="responseAlert"></div>
       <div class="section-label">Student responses</div>
@@ -231,7 +254,54 @@
           </select>
         </div>
         <div id="newQFormArea"></div>
-        <button class="btn btn-primary btn-sm" id="addQBtn" onclick="addQuestion()">+ Add question</button>
+        <div style="display:flex; gap:8px;">
+          <button class="btn btn-primary btn-sm" id="addQBtn" onclick="addQuestion()">+ Add question</button>
+          <button class="btn btn-outline btn-sm" onclick="switchTab('bank')">Browse question bank →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUESTION BANK -->
+    <div class="tab-panel" id="tab-bank">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; flex-wrap:wrap; gap:10px;">
+        <div>
+          <div class="section-label" style="margin-bottom:2px;">Question bank</div>
+          <p style="font-size:12.5px; color:var(--text-3);">Saved questions persist across sessions. Pull any into your active ticket.</p>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="showAddBankQuestion()">+ Save new question</button>
+      </div>
+      <div class="bank-filters" id="bankFilters">
+        <button class="bank-filter-btn active" data-filter="all" onclick="filterBank('all', this)">All</button>
+        <button class="bank-filter-btn" data-filter="short" onclick="filterBank('short', this)">Short answer</button>
+        <button class="bank-filter-btn" data-filter="mc" onclick="filterBank('mc', this)">Multiple choice</button>
+        <button class="bank-filter-btn" data-filter="tf" onclick="filterBank('tf', this)">True / False</button>
+        <button class="bank-filter-btn" data-filter="rank" onclick="filterBank('rank', this)">Ranking</button>
+      </div>
+      <div id="bankList"></div>
+      <div id="bankAddForm" style="display:none; margin-top:20px;">
+        <div class="section-label" style="margin-bottom:10px;">Add to bank</div>
+        <div class="add-q-panel">
+          <div class="form-stack" style="margin-bottom:14px;">
+            <div class="field">
+              <label class="label">Question type</label>
+              <select id="bankQType" onchange="renderBankQForm()">
+                <option value="short">Short Answer</option>
+                <option value="mc">Multiple Choice</option>
+                <option value="tf">True / False</option>
+                <option value="rank">Ranking</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="label">Subject / Tag (optional)</label>
+              <input type="text" id="bankQTag" placeholder="e.g. ELA, Biology, Unit 3" />
+            </div>
+          </div>
+          <div id="bankQFormArea"></div>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-primary btn-sm" onclick="saveToBankFromForm()">Save to bank</button>
+            <button class="btn btn-ghost btn-sm" onclick="hideBankAddForm()">Cancel</button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -249,7 +319,7 @@
       </div>
       <div class="settings-section">
         <h3>Danger zone</h3>
-        <p class="text-muted" style="font-size:13px; margin-bottom:14px;">Permanently delete all student response data for your class. This cannot be undone.</p>
+        <p class="text-muted" style="font-size:13px; margin-bottom:14px;">Permanently delete all student response data. This cannot be undone.</p>
         <button class="btn btn-danger btn-sm" onclick="clearResponses()">Clear all responses</button>
         <div id="clearAlert" style="margin-top:12px;"></div>
       </div>
